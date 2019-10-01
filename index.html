@@ -6,26 +6,75 @@
     <!-- Reset -->
     <link rel="stylesheet" href="assets/CSS/reset.css">
 
+
+
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+        integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+
     <link rel="stylesheet" href="Assets/CSS/style.css">
+    <link href="https://fonts.googleapis.com/css?family=Notable|Teko|Turret+Road&display=swap" rel="stylesheet">
 
 
 </head>
 
 <body>
     <div class="conatiner">
-        <header>
-            <h1>Lorem Guessem</h1>
+        <br>
+        <div class="container 2">
 
-            <h3>Guess the Lorem Word</h3>
-        </header>
+            <div class="row">
+                <div class="col-sm-4 jumbotron text-center"><strong>
+                        <h1>Lorem Guessem</h1>
+                    </strong>
+                    <br>
+                    <p class="small">Guess the correct Lorem Ipsum word.</p>
+                </div>
+            </div>
 
-        <div class="underscores"></div>
-        <div class="guesses">
-            <div class="correctGuess">Correct Guess</div>
-            <div class="incorrectGuess">Incorrect Guess</div>
-        </div>
-    </div>
-    <script type="text/javascript" src="Assets/javascript/game2.js"></script>
+            <div class="row">
+                <div class="col-sm-4 jumbotron">
+                    <table class="table table-bordered table-dark ">
+                        <thead>
+                            <tr>
+
+                                <div class="guesses">
+
+                                    <div id="wrongLettersCounted"></div>
+                                </div>
+                                <div class="guessesLeft">
+                                    <th><strong>Guesses Left</strong></th>
+
+                                </div>
+                                <div class="wins">
+                                    <th><strong>Wins</strong></th>
+
+                                </div>
+                                <div class="losses">
+                                    <th><strong>Losses</strong></th>
+                                </div>
+                                <div id="underscores">------</div>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>
+                                    <div id="guessesLeftNum">9</div>
+                                </td>
+                                <td>
+                                    <div id="winsNum">2</div>
+                                </td>
+                                <td>
+                                    <div id="lossesNum">2</div>
+                                </td>
+                            </tr>
+                        </tbody>
+                </div>
+                </table>
+                <div class="wrongLetters">
+                    Wrong Letters
+                </div>
+            </div>
+            <script type="text/javascript" src="Assets/javascript/game2.js"></script>
 </body>
 
 </html>

@@ -1,76 +1,147 @@
-//Array of Lorem words
-const lorems = ['Lorem', 'ipsum', 'dolor', 'sit',
+//Global Variables 
+//-----------------------------------------------------------
+
+
+//Array
+const lorems = ['lorem', 'ipsum', 'dolor', 'sit',
     'amet', 'consectetur', 'adipiscing', 'elit', 'sed',
     'do', 'eiusmod', 'tempor', 'incididunt', 'ut',
     'labore', 'et', 'dolore', 'magna', 'aliqua',
     'enim', 'ad', 'minim', 'veniam', 'quis', 'nostrud',
     'exercitation', 'ullamco', 'laboris', 'nisi',
-    'aliquip', 'ex', 'ea', 'commodo', 'consequat', 'Duis',
+    'aliquip', 'ex', 'ea', 'commodo', 'consequat', 'duis',
     'aute', 'irure', 'dolor', 'reprehenderit', 'in',
     'voluptate', 'velit', 'esse', 'cillum', 'dolore',
-    'eu', 'fugiat', 'nulla', 'pariatur', 'Excepteur',
+    'eu', 'fugiat', 'nulla', 'pariatur', 'excepteur',
     'sint', 'occaecat', 'cupidatat', 'non', 'proident',
     'sunt', 'culpa', 'qui', 'officia', 'deserunt',
     'mollit', 'anim', 'id', 'est', 'laborum'];
 
-//words are chosen randomly
-var randomNum = Math.floor(Math.random() * lorems.length);
-var correctChoice = [];
-var incorrectChoice = [];
-var randomWord = lorems[randomNum];
-var underscoreGroup = [];
+var randomWord = "";
+var lettersInWord = [];
+var underscoreNum = 0;
+var undersAndSuccesses = [];
+var wrongLetters = [];
 
+var winCount = 0;
+var lossCount = 0;
+var guessesLeft = 9;
 
-//Working on the Dom 
-var pageUnderscores = document.getElementsByClassName('underscores');
+var soundPlayer1 = new Audio('Assets/Wavs/BackgroundMuzak(MadebyAxel).wav');
 
-console.log(randomWord);
+//Functions  
+//-----------------------------------------------------------
+function startGame() {
+    randomWord = lorems[Math.floor(Math.random() * lorems.length)];
+    lettersInWord = randomWord.split("");
+    underscoreNum = randomWord.length;
 
-var numUnderscores = randomWord.length;
+    guessesLeft = 9;
+    wrongLetters = [];
+    undersAndSuccesses = [];
 
-//Populate amount of underscores based on words.length
-var createUnderscores = () => {
-    var newArr = [];
-
-    for (var i = 0; i < numUnderscores; i++) {
-        newArr.push('_');
+    for (var i = 0; i < underscoreNum; i++) {
+        undersAndSuccesses.push("_");
     }
-    console.log(newArr)
-    return newArr;
+
+    document.getElementById("underscores").innerHTML = undersAndSuccesses.join(" ");
+    document.getElementById("guessesLeftNum").innerHTML = guessesLeft;
+    document.getElementById("winsNum").innerHTML = winCount;
+    document.getElementById("lossesNum").innerHTML = lossCount;
+
+    console.log(randomWord);
+    //console.log(lettersInWord);
+    //console.log(underscoreNum);
+    console.log(undersAndSuccesses);
+    console.log(guessesLeft);
+
+    //soundPlayer1.play();
+}
+
+function checkLetters(letter) {
+    var isLetterInWord = false;
+
+    for (var i = 0; i < underscoreNum; i++) {
+        if (randomWord[i] == letter) {
+            isLetterInWord = true;
+        }
+    }
+    if (lettersInWord) {
+        for (var i = 0; i < underscoreNum; i++) {
+            if (randomWord[i] == letter) {
+                undersAndSuccesses[i] = letter;
+            }
+        }
+    }
+
+    else {
+        wrongLetters.push(letter);
+        guessesLeft--;
+        //console.log(guessesLeft);
+    }
+
+    console.log(undersAndSuccesses);
+    //console.log(guessesLeft);
+
+
+}
+
+function pauseAudio() {
+    soundPlayer1.stop();
+}
+
+function roundComplete() {
+    console.log("Win Count: " + winCount + " | Loss Count: " + lossCount + " Guesses Left: " + guessesLeft);
+
+    document.getElementById("guessesLeftNum").innerHTML = guessesLeft;
+    document.getElementById("underscores").innerHTML = undersAndSuccesses.join(" ");
+    document.getElementById("lossesNum").innerHTML = wrongLetters.join(" ");
+
+    //check if user won 
+    if (lettersInWord.toString() == undersAndSuccesses.toString()) {
+        winCount++;
+        alert("You win!");
+
+        document.getElementById("winsNum").innerHTML = winCount;
+        var audio = new Audio('Assets/Wavs/MacPlus.wav');
+        audio.play();
+
+
+
+        pauseAudio();
+
+        startGame();
+    }
+
+    //check if user lost
+
+    else if (guessesLeft == 0) {
+        lossCount++;
+        alert("You Lose!")
+
+        document.getElementById("lossesNum").innerHTML = lossCount;
+
+        pauseAudio();
+
+        startGame();
+    }
+
+
+
 }
 
 
 
-console.log(createUnderscores());
-//Var which tracks what letter user checks
-document.addEventListener('keypress', (event) => {
-    var btnChoice = String.fromCharCode(event.keyCode);
 
-    //if user guess is correct 
-    if (randomWord.indexOf(btnChoice) > -1) {
-        //send to correctChoice array 
-        correctChoice.push(btnChoice);
+//Main Processes 
+//-----------------------------------------------------------
+startGame();
 
-        //replace underscores with correct letters
-        underscoreGroup[randomWord.indexOf(btnChoice)] = btnChoice;
-        pageUnderscores.innerHTML = underscoreGroup.join('');
-        //check to see if randomWord matches btnChoice
-        if (underscoreGroup.join('') == randomWord) {
-            alert('Vincere te! (You Win)')
-        }
-        console.log(underscoreGroup);
-        console.log(correctChoice);
-    }
-    else {
-        incorrectChoice.push(btnChoice);
-        console.log(incorrectChoice)
-    }
-});
+document.onkeyup = function (event) {
+    var letterGuessed = String.fromCharCode(event.keyCode).toLowerCase();
+    checkLetters(letterGuessed);
+    roundComplete();
 
-var guessesLeft = pageUnderscores.length + 3;
-//console.log(guessesLeft);
-console.log(createUnderscores())
-pageUnderscores[0].innerHTML = createUnderscores().join(' ');
-//Logic that checks if chosen word is correct
-//If correct, push to "Correct Guess"
-//If incorrect, push to "Incorrect Guess"
+
+    console.log(letterGuessed);
+}

@@ -1,38 +1,76 @@
 header {
     border: 3px solid black; 
     height: 150px; 
-    width: 80%;
+    width: 60%;
+    align-content: initial;
     font-size: 20px;
-    text-align: center; 
+    text-align: left; 
     margin: 0 auto;
+    font-family: 'Turret Road', cursive;
 }
 
-.underscores {
-    border: 3px solid black; 
-    border-top: 0px;
-    height: 150px; 
-    width: 80%;
-    font-size: 50px;
-    text-align: center; 
-    margin: 0 auto;
+h1 {
+    font-family: 'Turret Road', cursive;
+    font-weight: bold;
+    
 }
 
-.incorrectGuess {
-    border: 3px solid black; 
-    border-top: 0px;
-    height: 150px; 
-    width: 80%;
+.small {
+    font-family: 'Teko', sans-serif;
     font-size: 20px;
-    text-align: center; 
-    margin: 0 auto;
 }
 
-.correctGuess {
-    border: 3px solid black;
-    border-top: 0px; 
-    height: 150px; 
-    width: 80%;
-    font-size: 20px;
-    text-align: center; 
-    margin: 0 auto;
+.jumbotron {
+    
+    
+    background-size: 100%;  
+    background-color: aliceblue;   
+        
 }
+
+body {
+    background-image: url("/Assets/Images/vapewave.jpg");
+    background-size: 100%;
+    
+    
+}
+
+#underscores {
+    text-align: center;
+    padding-left: 5px;
+    font-size: 40px;
+    padding-bottom: 20px;
+    font-family: 'Teko', sans-serif;
+    
+}
+
+.wrongLetters {
+    font-size: 20px;
+    padding-bottom: 20px;
+    padding-top: 20px;
+    text-align: center;
+    font-family: Arial, Helvetica, sans-serif;
+    
+}
+
+
+
+.tableHead {
+    font-weight: 900;
+}
+
+#guessesLeftNum {
+    text-align: center;
+}
+
+#winsNum {
+    text-align: center;
+}
+
+#lossesNum {
+    text-align: center;
+}
+
+
+
+.guessesLeft {}
