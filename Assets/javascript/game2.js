@@ -25,7 +25,7 @@ var wrongLetters = [];
 
 var winCount = 0;
 var lossCount = 0;
-var guessesLeft = 9;
+var guessesLeft = randomWord.length;
 
 var soundPlayer1 = new Audio('Assets/Wavs/BackgroundMuzak(MadebyAxel).wav');
 
@@ -36,7 +36,7 @@ function startGame() {
     lettersInWord = randomWord.split("");
     underscoreNum = randomWord.length;
 
-    guessesLeft = 9;
+    guessesLeft = randomWord.length;
     wrongLetters = [];
     undersAndSuccesses = [];
 
@@ -54,30 +54,66 @@ function startGame() {
     //console.log(underscoreNum);
     console.log(undersAndSuccesses);
     console.log(guessesLeft);
+    setTimeout(function () {
+        soundPlayer1.play();
 
-    //soundPlayer1.play();
+    }, 4000)
+
 }
 
-function checkLetters(letter) {
+//needs two startGame functions so audio doesn't overlap between "you win" audio and backgground music (set interval time needs to be longer for the longer "you win" track.)
+function startGameLongerPause() {
+    randomWord = lorems[Math.floor(Math.random() * lorems.length)];
+    lettersInWord = randomWord.split("");
+    underscoreNum = randomWord.length;
+
+    guessesLeft = randomWord.length;
+    wrongLetters = [];
+    undersAndSuccesses = [];
+
+    for (var i = 0; i < underscoreNum; i++) {
+        undersAndSuccesses.push("_");
+    }
+
+    document.getElementById("underscores").innerHTML = undersAndSuccesses.join(" ");
+    document.getElementById("guessesLeftNum").innerHTML = guessesLeft;
+    document.getElementById("winsNum").innerHTML = winCount;
+    document.getElementById("lossesNum").innerHTML = lossCount;
+
+    console.log(randomWord);
+    //console.log(lettersInWord);
+    //console.log(underscoreNum);
+    console.log(undersAndSuccesses);
+    console.log(guessesLeft);
+    setTimeout(function () {
+        soundPlayer1.play();
+
+    }, 19500)
+
+}
+
+
+
+
+function checkLetters(letters) {
     var isLetterInWord = false;
 
     for (var i = 0; i < underscoreNum; i++) {
-        if (randomWord[i] == letter) {
+        if (randomWord[i] == letters) {
             isLetterInWord = true;
         }
     }
-    if (lettersInWord) {
+    if (isLetterInWord) {
         for (var i = 0; i < underscoreNum; i++) {
-            if (randomWord[i] == letter) {
-                undersAndSuccesses[i] = letter;
+            if (randomWord[i] == letters) {
+                undersAndSuccesses[i] = letters;
             }
         }
     }
 
     else {
-        wrongLetters.push(letter);
-        guessesLeft--;
-        //console.log(guessesLeft);
+        wrongLetters.push(letters);
+        guessesLeft--
     }
 
     console.log(undersAndSuccesses);
@@ -87,7 +123,7 @@ function checkLetters(letter) {
 }
 
 function pauseAudio() {
-    soundPlayer1.stop();
+    soundPlayer1.pause();
 }
 
 function roundComplete() {
@@ -95,7 +131,9 @@ function roundComplete() {
 
     document.getElementById("guessesLeftNum").innerHTML = guessesLeft;
     document.getElementById("underscores").innerHTML = undersAndSuccesses.join(" ");
-    document.getElementById("lossesNum").innerHTML = wrongLetters.join(" ");
+    document.getElementById("lettersPlaced").innerHTML = wrongLetters.join(" ");
+
+
 
     //check if user won 
     if (lettersInWord.toString() == undersAndSuccesses.toString()) {
@@ -110,7 +148,9 @@ function roundComplete() {
 
         pauseAudio();
 
-        startGame();
+        startGameLongerPause();
+
+
     }
 
     //check if user lost
@@ -121,9 +161,16 @@ function roundComplete() {
 
         document.getElementById("lossesNum").innerHTML = lossCount;
 
+
+
+        var audio3 = new Audio('Assets/Wavs/sadtrumpet.wav');
+        audio3.play();
+
+
         pauseAudio();
 
         startGame();
+
     }
 
 
@@ -136,6 +183,7 @@ function roundComplete() {
 //Main Processes 
 //-----------------------------------------------------------
 startGame();
+soundPlayer1.play();
 
 document.onkeyup = function (event) {
     var letterGuessed = String.fromCharCode(event.keyCode).toLowerCase();
